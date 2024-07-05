@@ -16,12 +16,12 @@ pipeline {
         }
         stage('Build docker image'){
             steps {
-                sh 'docker build -t flask-container .'
+                sh 'sudo docker build -t flask-container .'
             }
         }
         stage('Run docker container'){
             steps {
-                sh 'docker run -d -p 5000:5000 flask-container'
+                sh 'sudo docker run -d -p 5000:5000 flask-container'
             }
         }
         stage('test connection'){
