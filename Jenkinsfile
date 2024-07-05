@@ -29,7 +29,7 @@ pipeline {
                 sh 'curl http://localhost:5000'
             }
         }
-        stage('clean ws'){
+        stage('clean ws final'){
             steps {
                 cleanWs()
             }
