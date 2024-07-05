@@ -11,7 +11,7 @@ pipeline {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], 
                 extensions: [], 
-                userRemoteConfigs: [[url: 'https://github.com/ennioandreassi/test-flask-container']]),
+                userRemoteConfigs: [[url: 'https://github.com/ennioandreassi/test-flask-container']])
             }
         }
         stage('Build docker image'){
