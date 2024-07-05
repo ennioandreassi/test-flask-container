@@ -9,7 +9,6 @@ pipeline {
         }
         stage('Git checkout'){
             steps {
-                $class: 'GitSCM', 
                 checkout scmGit(branches: [[name: '*/main']], 
                 extensions: [], 
                 userRemoteConfigs: [[url: 'https://github.com/ennioandreassi/test-flask-container']]),
