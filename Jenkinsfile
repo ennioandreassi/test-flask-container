@@ -23,11 +23,11 @@ pipeline {
         stage('Check container running'){
             steps {
                 script {
-                def container = sh(script: 'docker ps | grep flask-container', returnStdout: true).trim()
+                def container = sh(script: 'docker ps', returnStdout: true).trim()
                 if(container.contains('flask-container')){
                     sh 'docker stop flask-container'
                 }
-                def container_stop = sh(script: 'docker ps -a | grep flask-container', returnStdout: true).trim()
+                def container_stop = sh(script: 'docker ps -a', returnStdout: true).trim()
                 if(container_stop.contains('flask-container')){
                     sh 'docker rm flask-container'
                 }
