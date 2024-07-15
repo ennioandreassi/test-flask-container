@@ -25,6 +25,8 @@ pipeline {
                 def isrunning = sh(script: 'docker ps | grep -i flask-container', returnStdout: true)
                 if (isrunning == 0){
                     sh 'docker stop flask-container'
+                }
+            }
         }
         stage('Build docker image'){
             steps {
