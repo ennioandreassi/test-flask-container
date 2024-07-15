@@ -3,7 +3,7 @@ pipeline {
 
 
     parameters {
-        string(name: 'GIT_URL', defaultValue: 'https://github.com/ennioandreassi/test-flask-container'),
+        string(name: 'GIT_URL', defaultValue: 'https://github.com/ennioandreassi/test-flask-container')
         string(name: 'GIT_BRANCH', defaultValue: '*/main')
     }
     
