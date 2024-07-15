@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+
+    parameters {
+        string(name: 'GIT_URL', defaultValue: 'https://github.com/ennioandreassi/test-flask-container'),
+        string(name: 'GIT_BRANCH', defaultValue: '*/main')
+    }
+    
     stages {
         stage('clean ws') {
             steps {
@@ -9,9 +15,9 @@ pipeline {
         }
         stage('Git checkout'){
             steps {
-                checkout scmGit(branches: [[name: '*/main']], 
+                checkout scmGit(branches: [[name: params.GIT_BRANCH]], 
                 extensions: [], 
-                userRemoteConfigs: [[url: 'https://github.com/ennioandreassi/test-flask-container']])
+                userRemoteConfigs: [[url: params.GIT_URL]])
             }
         }
         stage('Build docker image'){
@@ -36,4 +42,3 @@ pipeline {
         }
     }
 }
-
