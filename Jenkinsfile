@@ -20,7 +20,7 @@ pipeline {
                 userRemoteConfigs: [[url: params.GIT_URL]])
             }
         }
-        /*stage('Check container running'){
+        stage('Check container running'){
             steps {
                 script{
                     def isrunning = sh(script: 'docker ps flask-container', returnStdout: true)
@@ -29,7 +29,7 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
         stage('Build docker image'){
             steps {
                 sh ' docker build -t flask-container .'
@@ -37,7 +37,7 @@ pipeline {
         }
         stage('Run docker container'){
             steps {
-                sh ' docker run -d -p 5000:5000 flask-container --name flask-container'
+                sh ' docker run -d -p 5000:5000 --name flask-container flask-container'
             }
         }
         stage('test connection'){
