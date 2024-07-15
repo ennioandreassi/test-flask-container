@@ -22,9 +22,11 @@ pipeline {
         }
         stage('Check container running'){
             steps {
-                def isrunning = sh(script: 'docker ps | grep -i flask-container', returnStdout: true)
-                if (isrunning == 0){
-                    sh 'docker stop flask-container'
+                script{
+                    def isrunning = sh(script: 'docker ps | grep -i flask-container', returnStdout: true)
+                    if (isrunning == 0){
+                     sh 'docker stop flask-container'
+                    }
                 }
             }
         }
