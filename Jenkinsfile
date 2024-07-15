@@ -28,7 +28,7 @@ pipeline {
                     sh 'docker stop flask-container'
                 }
                 def container_stop = sh(script: 'docker ps -a | grep flask-container', returnStdout: true).trim()
-                if(container_stop != ''){
+                if(container_stop.contains('flask-container')){
                     sh 'docker rm flask-container'
                 }
             }
