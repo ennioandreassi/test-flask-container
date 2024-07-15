@@ -23,7 +23,7 @@ pipeline {
         stage('Check container running'){
             steps {
                 script{
-                    def isrunning = sh(script: 'docker ps | grep -i flask-container', returnStdout: true)
+                    def isrunning = sh(script: 'docker ps flask-container', returnStdout: true)
                     if (isrunning == 0){
                      sh 'docker stop flask-container'
                     }
@@ -37,7 +37,7 @@ pipeline {
         }
         stage('Run docker container'){
             steps {
-                sh ' docker run -d -p 5000:5000 flask-container'
+                sh ' docker run -d -p 5000:5000 flask-container --name flask-container'
             }
         }
         stage('test connection'){
