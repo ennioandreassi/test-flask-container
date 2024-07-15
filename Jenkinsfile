@@ -30,13 +30,6 @@ pipeline {
                 }
             }
         }*/
-        stage('Delay'){
-            steps {
-                script {
-                    sleep(15)
-                }
-            }
-        }
         stage('Build docker image'){
             steps {
                 sh ' docker build -t flask-container .'
@@ -45,6 +38,13 @@ pipeline {
         stage('Run docker container'){
             steps {
                 sh ' docker run -d -p 5000:5000 --name flask-container flask-container'
+            }
+        }
+        stage('Delay'){
+            steps {
+                script {
+                    sleep(7)
+                }
             }
         }
         stage('test connection'){
