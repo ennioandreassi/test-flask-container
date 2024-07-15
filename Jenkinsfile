@@ -19,7 +19,7 @@ pipeline {
                 extensions: [], 
                 userRemoteConfigs: [[url: params.GIT_URL]])
             }
-        }
+        }/*
         stage('Check container running'){
             steps {
                 script{
@@ -29,7 +29,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
         stage('Build docker image'){
             steps {
                 sh ' docker build -t flask-container .'
