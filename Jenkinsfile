@@ -39,7 +39,7 @@ pipeline {
                 script {
                     sh """
                     sed -i 's/replicaCount: 1/replicaCount: 3/' /helm/${params.NAME_CHART}/values.yaml
-                    sed -i 's/repository: nginx/repository: flask-container/' /helm/${params.NAME_CHART}/values.yaml
+                    sed -i 's/repository: nginx/repository: ennioandreassi88/flask-container' /helm/${params.NAME_CHART}/values.yaml
                     """
                 }
             }
@@ -47,6 +47,14 @@ pipeline {
         stage('Build docker image'){
             steps {
                 sh ' docker build -t flask-container .'
+            }
+        }
+        stage('Push docker image'){
+            steps {
+                script {
+                    sh 'docker tag flask-container ennioandreassi88/flask'
+                    sh 'docker push ennioandreassi88/flask-container'
+                }
             }
         }
         stage('Run chart'){
