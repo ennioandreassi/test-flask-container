@@ -46,13 +46,13 @@ pipeline {
         }
         stage('Build docker image'){
             steps {
-                sh ' docker build -t flask-container .'
+                sh ' docker build -t ennioandreassi88/flask-container .'
             }
         }
         stage('Push docker image'){
             steps {
                 script {
-                    sh 'docker tag flask-container ennioandreassi88/flask'
+                    sh 'docker tag ennioandreassi88/flask-container'
                     sh 'docker push ennioandreassi88/flask-container'
                 }
             }
