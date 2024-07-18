@@ -52,8 +52,11 @@ pipeline {
         stage('Push docker image'){
             steps {
                 script {
-                    sh 'docker tag flask-container ennioandreassi88/flask-container'
-                    sh 'docker push ennioandreassi88/flask-container'
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        sh 'echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin'
+                        sh 'docker tag flask-container ennioandreassi88/flask-container'
+                        sh 'docker push ennioandreassi88/flask-container'
+                    }
                 }
             }
         }
