@@ -52,7 +52,7 @@ pipeline {
         stage('Push docker image'){
             steps {
                 script {
-                    sh 'docker tag ennioandreassi88/flask-container'
+                    sh 'docker tag ennioandreassi88/flask-container ennioandreassi88/flask-container'
                     sh 'docker push ennioandreassi88/flask-container'
                 }
             }
