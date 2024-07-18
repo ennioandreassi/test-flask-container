@@ -37,7 +37,10 @@ pipeline {
         stage('Update values.yaml'){
             steps {
                 script {
-                    sh "echo \"image: flask-container\" > /helm/${params.NAME_CHART}/values.yaml"
+                    sh """
+                    sed -i 's/replicaCount: 1/replicaCount: 3/' /helm/${params.NAME_CHART}/values.yaml
+                    sed -i 's/repository: nginx/repository: flask-container/' /helm/${params.NAME_CHART}/values.yaml
+                    """
                 }
             }
         }
