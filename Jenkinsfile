@@ -5,6 +5,8 @@ pipeline {
     parameters {
         string(name: 'GIT_URL', defaultValue: 'https://github.com/ennioandreassi/test-flask-container')
         string(name: 'GIT_BRANCH', defaultValue: '*/main')
+        string(name: 'NAME_RELEASE', defaultValue: 'flask-project')
+        string(name: 'NAME_CHART', defaultValue: 'flask')
     }
     
     stages {
@@ -20,40 +22,45 @@ pipeline {
                 userRemoteConfigs: [[url: params.GIT_URL]])
             }
         }
-        stage('Check container running'){
+        stage('Check chart exists'){
             steps {
                 script {
-                def container = sh(script: 'docker ps', returnStdout: true).trim()
-                if(container.contains('flask-container')){
-                    sh 'docker stop flask-container'
-                }
-                def container_stop = sh(script: 'docker ps -a', returnStdout: true).trim()
-                if(container_stop.contains('flask-container')){
-                    sh 'docker rm flask-container'
+                    if (fileExists('/root/${params.NAME_CHART}')) {
+                        echo 'Chart exists'
+                    } else {
+                        echo 'Chart does not exist'
+                        sh 'cd /root ; helm create ${params.NAME_CHART}'
+                    }
                 }
             }
         }
-    }
+        stage('Update values.yaml'){
+            steps {
+                script {
+                    sh 'echo "image: flask-container" > /root/${params.NAME_CHART}/values.yaml'
+                }
+            }
+        }
         stage('Build docker image'){
             steps {
                 sh ' docker build -t flask-container .'
             }
         }
-        stage('Run docker container'){
+        stage('Run chart'){
             steps {
-                sh ' docker run -d -p 5000:5000 --name flask-container flask-container'
+                sh 'cd /root ; helm upgrade --install ${params.NAME_RELEASE} ${params.NAME_CHART}'   
             }
         }
         stage('Delay'){
             steps {
                 script {
-                    sleep(7)
+                    sleep(15)
                 }
             }
         }
-        stage('test connection'){
+        stage('test pod'){
             steps {
-                sh 'curl http://localhost:5000'
+                sh 'k get pod'
             }
         }
         stage('clean ws final'){
