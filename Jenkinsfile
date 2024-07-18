@@ -60,7 +60,12 @@ pipeline {
         }
         stage('test pod'){
             steps {
-                sh 'k get pod'
+                list_pod = sh(script: 'kubectl get pods | grep flask-project | awk \'{print $1}\'', returnStdout: true).trim()
+                if list_pod.contains('flask') {
+                    echo 'Pod exists'
+                } else {
+                    echo 'Pod does not exist'
+                }
             }
         }
         stage('clean ws final'){
