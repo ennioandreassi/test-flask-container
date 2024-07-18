@@ -25,11 +25,11 @@ pipeline {
         stage('Check chart exists'){
             steps {
                 script {
-                    if (fileExists('/root/${params.NAME_CHART}')) {
+                    if (fileExists("/root/${params.NAME_CHART}")) {
                         echo 'Chart exists'
                     } else {
                         echo 'Chart does not exist'
-                        sh 'cd /root ; helm create ${params.NAME_CHART}'
+                        sh "cd /root ; helm create ${params.NAME_CHART}"
                     }
                 }
             }
@@ -37,7 +37,7 @@ pipeline {
         stage('Update values.yaml'){
             steps {
                 script {
-                    sh 'echo "image: flask-container" > /root/${params.NAME_CHART}/values.yaml'
+                    sh "echo \"image: flask-container\" > /root/${params.NAME_CHART}/values.yaml"
                 }
             }
         }
@@ -48,7 +48,7 @@ pipeline {
         }
         stage('Run chart'){
             steps {
-                sh 'cd /root ; helm upgrade --install ${params.NAME_RELEASE} ${params.NAME_CHART}'   
+                sh "cd /root ; helm upgrade --install ${params.NAME_RELEASE} ${params.NAME_CHART}"
             }
         }
         stage('Delay'){
