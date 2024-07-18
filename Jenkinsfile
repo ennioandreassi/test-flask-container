@@ -29,7 +29,7 @@ pipeline {
                         echo 'Chart exists'
                     } else {
                         echo 'Chart does not exist'
-                        sh "cd /helm ; helm create ${params.NAME_CHART}"
+                        sh "cd /helm ; sudo helm create ${params.NAME_CHART}"
                     }
                 }
             }
@@ -37,7 +37,7 @@ pipeline {
         stage('Update values.yaml'){
             steps {
                 script {
-                    sh "echo \"image: flask-container\" > /helm/${params.NAME_CHART}/values.yaml"
+                    sh "sudo echo \"image: flask-container\" > /helm/${params.NAME_CHART}/values.yaml"
                 }
             }
         }
@@ -48,7 +48,7 @@ pipeline {
         }
         stage('Run chart'){
             steps {
-                sh "cd /helm ; helm upgrade --install ${params.NAME_RELEASE} ${params.NAME_CHART}"
+                sh "cd /helm ; sudo helm upgrade --install ${params.NAME_RELEASE} ${params.NAME_CHART}"
             }
         }
         stage('Delay'){
@@ -61,7 +61,7 @@ pipeline {
         stage('test pod'){
             steps {
                 script {
-                    list_pod = sh(script: 'kubectl get pods | grep flask-project | awk \'{print $1}\'', returnStdout: true).trim()
+                    list_pod = sh(script: 'sudo kubectl get pods | grep flask-project | awk \'{print $1}\'', returnStdout: true).trim()
                     if (list_pod.contains('flask')) {
                         echo 'Pod exists'
                     } else {
