@@ -48,7 +48,7 @@ pipeline {
         }
         stage('Run chart'){
             steps {
-                sh "cd /helm ; helm upgrade --install ${params.NAME_RELEASE} ${params.NAME_CHART}"
+                sh "cd /helm ; sudo helm upgrade --install ${params.NAME_RELEASE} ${params.NAME_CHART}"
             }
         }
         stage('Delay'){
