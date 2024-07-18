@@ -62,7 +62,7 @@ pipeline {
             steps {
                 script {
                     list_pod = sh(script: 'kubectl get pods | grep flask-project | awk \'{print $1}\'', returnStdout: true).trim()
-                    if list_pod.contains('flask') {
+                    if (list_pod.contains('flask')) {
                         echo 'Pod exists'
                     } else {
                         echo 'Pod does not exist'
