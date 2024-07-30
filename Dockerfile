@@ -2,7 +2,7 @@ FROM python:3.8-slim
 
 WORKDIR /app
 
-copy app.py /app
+COPY app.py /app
 
 RUN pip install flask requests flask-cors
 
