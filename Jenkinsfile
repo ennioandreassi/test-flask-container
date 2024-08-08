@@ -43,11 +43,7 @@ pipeline {
                     sed -i 's|replicaCount: 1|replicaCount: 3|' /helm/${params.NAME_CHART}/values.yaml
                     sed -i 's|repository: nginx|repository: ennioandreassi88/flask-container|' /helm/${params.NAME_CHART}/values.yaml
                     sed -i 's|tag: ""|tag: latest|' /helm/${params.NAME_CHART}/values.yaml
-                    sed -i 's|path: /|path: /healthz|' /helm/${params.NAME_CHART}/values.yaml
-                    sed -i 's|port: http|port: 8000|' /helm/${params.NAME_CHART}/values.yaml
-                    sed -i '/livenessProbe:/a\\  initialDelaySeconds: 15' /helm/${params.NAME_CHART}/values.yaml
-                    sed -i 's|path: /|path: /health|' /helm/${params.NAME_CHART}/values.yaml
-                    sed -i '/readinessProbe:/a\\  initialDelaySeconds: 15' /helm/${params.NAME_CHART}/values.yaml
+                    sed -i '/readinessProbe:/,+3d' /helm/${params.NAME_CHART}/values.yaml
                     """
                 }
             }
