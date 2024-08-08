@@ -45,6 +45,7 @@ pipeline {
                     sed -i 's/tag:.*/tag: "latest"/' /helm/${params.NAME_CHART}/values.yaml
                     sed -i 's/type:.*/type: "NodePort"/' /helm/${params.NAME_CHART}/values.yaml
                     sed -i 's/nodePort:.*/nodePort: 30007/' /helm/${params.NAME_CHART}/values.yaml
+                    sed -i '/readinessProbe:/,+3d' /helm/${params.NAME_CHART}/values.yaml
                     """
                 }
             }
