@@ -40,11 +40,11 @@ pipeline {
             steps {
                 script {
                     sh """
-                    yq e '.replicaCount = 3' -i /helm/${params.NAME_CHART}/values.yaml
-                    yq e '.image.repository = "ennioandreassi88/flask-container"' -i /helm/${params.NAME_CHART}/values.yaml
-                    yq e '.image.tag = "latest"' -i /helm/${params.NAME_CHART}/values.yaml
-                    yq e '.service.type = "NodePort"' -i /helm/${params.NAME_CHART}/values.yaml
-                    yq e '.service.nodePort = 30007' -i /helm/${params.NAME_CHART}/values.yaml
+                    sed -i 's/replicaCount:.*/replicaCount: 3/' /helm/${params.NAME_CHART}/values.yaml
+                    sed -i 's|repository:.*|repository: "ennioandreassi88/flask-container"|' /helm/${params.NAME_CHART}/values.yaml
+                    sed -i 's/tag:.*/tag: "latest"/' /helm/${params.NAME_CHART}/values.yaml
+                    sed -i 's/type:.*/type: "NodePort"/' /helm/${params.NAME_CHART}/values.yaml
+                    sed -i 's/nodePort:.*/nodePort: 30007/' /helm/${params.NAME_CHART}/values.yaml
                     """
                 }
             }
