@@ -34,7 +34,7 @@ pipeline {
                     }
                 }
             }
-        }
+
         }
         stage('Update values.yaml'){
             steps {
