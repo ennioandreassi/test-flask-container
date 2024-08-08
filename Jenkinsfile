@@ -25,7 +25,8 @@ pipeline {
         stage('Check chart exists'){
             steps {
                 script {
-                    if (fileExists("/root/${params.NAME_CHART}")) {
+                    def chartExists = sh(script: "helm list -q | grep -w ${params.NAME_CHART}", returnStatus: true) == 0
+                    if (chartExists) {
                         echo 'Chart exists'
                     } else {
                         echo 'Chart does not exist'
@@ -34,12 +35,13 @@ pipeline {
                 }
             }
         }
+        }
         stage('Update values.yaml'){
             steps {
                 script {
                     sh """
                     sed -i 's|replicaCount: 1|replicaCount: 3|' /helm/${params.NAME_CHART}/values.yaml
-                    sed -i 's|repository: nginx|repository: ennioandreassi88/flask-container|' /helm/${params.NAME_CHART}/values.yaml
+                    sed -i 's|repository: nginx|repository: ennioandreassi88/flask-container:latest|' /helm/${params.NAME_CHART}/values.yaml
                     """
                 }
             }
