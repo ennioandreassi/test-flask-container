@@ -36,14 +36,17 @@ pipeline {
             }
 
         }
-        stage('Update values.yaml'){
+        stage('Update values.yaml') {
             steps {
                 script {
-                    sh """
-                    sed -i 's|replicaCount: 1|replicaCount: 3|' /helm/${params.NAME_CHART}/values.yaml
-                    sed -i 's|repository: nginx|repository: ennioandreassi88/flask-container|' /helm/${params.NAME_CHART}/values.yaml
-                    sed -i 's|tag: ""|tag: latest|' /helm/${params.NAME_CHART}/values.yaml
-                    sed -i '/readinessProbe:/,+3d' /helm/${params.NAME_CHART}/values.yaml
+                    writeFile file: "/helm/${params.NAME_CHART}/values.yaml", text: """
+                    replicaCount: 3
+                    image:
+                      repository: ennioandreassi88/flask-container
+                      tag: latest
+                    service:
+                      type: NodePort
+                      nodePort: 30007
                     """
                 }
             }
