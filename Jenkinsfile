@@ -65,13 +65,13 @@ pipeline {
         }
         stage('Run chart'){
             steps {
-                sh "cd /helm ; sudo /usr/local/bin/helm upgrade --install ${params.NAME_RELEASE} ${params.NAME_CHART} --kubeconfig /home/helm/.kube/config"
+                sh "cd /helm ; sudo /usr/local/bin/helm upgrade --install ${params.NAME_RELEASE} ${params.NAME_CHART} --set livenessProbe.enabled=false --kubeconfig /home/helm/.kube/config"
             }
         }
         stage('Delay'){
             steps {
                 script {
-                    sleep(15)
+                    sleep(7)
                 }
             }
         }
