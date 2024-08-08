@@ -41,8 +41,8 @@ pipeline {
                 script {
                     sh """
                     sed -i 's|replicaCount: 1|replicaCount: 3|' /helm/${params.NAME_CHART}/values.yaml
-                    sed -i 's|repository: nginx|repository: ennioandreassi88/flask-container:latest|' /helm/${params.NAME_CHART}/values.yaml
-                    sed -i 's|tag: latest|tag: latest|' /helm/${params.NAME_CHART}/values.yaml
+                    sed -i 's|repository: nginx|repository: ennioandreassi88/flask-container|' /helm/${params.NAME_CHART}/values.yaml
+                    sed -i 's|tag: ""|tag: latest|' /helm/${params.NAME_CHART}/values.yaml
                     """
                 }
             }
