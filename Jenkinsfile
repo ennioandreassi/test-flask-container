@@ -39,14 +39,12 @@ pipeline {
         stage('Update values.yaml') {
             steps {
                 script {
-                    writeFile file: "/helm/${params.NAME_CHART}/values.yaml", text: """
-                    replicaCount: 3
-                    image:
-                      repository: ennioandreassi88/flask-container
-                      tag: latest
-                    service:
-                      type: NodePort
-                      nodePort: 30007
+                    sh """
+                    yq e '.replicaCount = 3' -i /helm/${params.NAME_CHART}/values.yaml
+                    yq e '.image.repository = "ennioandreassi88/flask-container"' -i /helm/${params.NAME_CHART}/values.yaml
+                    yq e '.image.tag = "latest"' -i /helm/${params.NAME_CHART}/values.yaml
+                    yq e '.service.type = "NodePort"' -i /helm/${params.NAME_CHART}/values.yaml
+                    yq e '.service.nodePort = 30007' -i /helm/${params.NAME_CHART}/values.yaml
                     """
                 }
             }
