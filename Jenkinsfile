@@ -77,7 +77,7 @@ pipeline {
         stage('test pod'){
             steps {
                 script {
-                    list_pod = sh(script: 'sudo kubectl get pods | grep flask-project | awk \'{print $1}\'', returnStdout: true).trim()
+                    list_pod = sh(script: 'sudo kubectl get pods --kubeconfig /home/helm/.kube/config| grep flask-project | awk \'{print $1}\'', returnStdout: true).trim()
                     if (list_pod.contains('flask')) {
                         echo 'Pod exists'
                     } else {
